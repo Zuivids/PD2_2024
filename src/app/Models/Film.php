@@ -10,6 +10,14 @@ class Film extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'name',
+        'producer_id',
+        'description',
+        'price',
+        'year',
+    ];
+
     public function producer(): BelongsTo
     {
         return $this->belongsTo(Producer::class);

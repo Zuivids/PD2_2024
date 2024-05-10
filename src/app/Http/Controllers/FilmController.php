@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\FilmRequest;
 use App\Models\Producer;
 use App\Models\Film;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
-
-
 
 class FilmController extends Controller implements HasMiddleware
 {
@@ -19,7 +17,28 @@ class FilmController extends Controller implements HasMiddleware
             'auth',
         ];
     }
+    private function saveFilmData(Film $film, FilmRequest $request){
 
+        $validatedData = $request->validate();
+
+        $film>fill($validatedData);
+        $film->display = (bool) ($validatedData['display'] ?? false);
+        if ($request->hasFile('image')) {
+            //TODO ja atjauno bildi, izdzesh veco
+            $uploadedFile = $request->file('image');
+            $extension = $uploadedFile->clientExtension();
+            $name = uniqid();
+            $film->image =  $uploadedFile->storePubliclyAs(
+                '/',
+                $name . '.' . $extension,
+                'uploads'
+            );
+        }
+        $film->save();
+
+        return redirect('/films');
+
+    }
     // display all Films
     public function list(): View
     {
@@ -34,7 +53,6 @@ class FilmController extends Controller implements HasMiddleware
         );
     }
     
-   
     public function create():View
     {
         $producers = Producer::orderBy('name', 'asc')->get();
@@ -48,36 +66,10 @@ class FilmController extends Controller implements HasMiddleware
             );
     }
     
-    public function put(Request $request): RedirectResponse
+    public function put(FilmRequest $request): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'name' => 'required|min:3|max:256',
-            'producer_id' => 'required',
-            'description' => 'nullable',
-            'price' => 'nullable|numeric',
-            'year' => 'numeric',
-            'image' => 'nullable|image',
-            'display' => 'nullable',
-        ]);
-
         $film = new Film();
-        $film->name = $validatedData['name'];
-        $film->producer_id = $validatedData['producer_id'];
-        $film->description = $validatedData['description'];
-        $film->price = $validatedData['price'];
-        $film->year = $validatedData['year'];
-        $film->display = (bool) ($validatedData['display'] ?? false);
-        if ($request->hasFile('image')) {
-            $uploadedFile = $request->file('image');
-            $extension = $uploadedFile->clientExtension();
-            $name = uniqid();
-            $film->image =  $uploadedFile->storePubliclyAs(
-                '/',
-                $name . '.' . $extension,
-                'uploads'
-            );
-        }
-        $film->save();
+        $this->saveFilmData($film, $request);
 
         return redirect('/films');
     }
@@ -98,36 +90,9 @@ class FilmController extends Controller implements HasMiddleware
     }
 
     // update Film data
-    public function patch(Film $film, Request $request): RedirectResponse
+    public function patch(Film $film, FilmRequest $request): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'name' => 'required|min:3|max:256',
-            'producer_id' => 'required',
-            'description' => 'nullable',
-            'price' => 'nullable|numeric',
-            'year' => 'numeric',
-            'image' => 'nullable|image',
-            'display' => 'nullable',
-        ]);
-
-        $film->name = $validatedData['name'];
-        $film->producer_id = $validatedData['producer_id'];
-        $film->description = $validatedData['description'];
-        $film->price = $validatedData['price'];
-        $film->year = $validatedData['year'];
-        $film->display = (bool) ($validatedData['display'] ?? false);
-        if ($request->hasFile('image')) {
-            $uploadedFile = $request->file('image');
-            $extension = $uploadedFile->clientExtension();
-            $name = uniqid();
-            $film->image =  $uploadedFile->storePubliclyAs(
-                '/',
-                $name . '.' . $extension,
-                'uploads'
-            );
-        }
-        $film->save();
-
+        $this->saveFilmData($film, $request);
         //return redirect('/films/update/' . $film->id);
         return redirect('/films');
     }
@@ -142,7 +107,6 @@ class FilmController extends Controller implements HasMiddleware
 
         $film->delete();
         return redirect('/films');
-
 
     }
 
