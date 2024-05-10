@@ -23,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Sākumlapa</a>
+                            <a class="nav-link" href="/">Home page</a>
                         </li>
                             <!--  Autentifikacijas parbaude -->
                         @if(Auth::check())

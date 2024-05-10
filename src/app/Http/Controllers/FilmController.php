@@ -67,6 +67,16 @@ class FilmController extends Controller implements HasMiddleware
         $film->price = $validatedData['price'];
         $film->year = $validatedData['year'];
         $film->display = (bool) ($validatedData['display'] ?? false);
+        if ($request->hasFile('image')) {
+            $uploadedFile = $request->file('image');
+            $extension = $uploadedFile->clientExtension();
+            $name = uniqid();
+            $film->image =  $uploadedFile->storePubliclyAs(
+                '/',
+                $name . '.' . $extension,
+                'uploads'
+            );
+        }
         $film->save();
 
         return redirect('/films');
@@ -106,6 +116,16 @@ class FilmController extends Controller implements HasMiddleware
         $film->price = $validatedData['price'];
         $film->year = $validatedData['year'];
         $film->display = (bool) ($validatedData['display'] ?? false);
+        if ($request->hasFile('image')) {
+            $uploadedFile = $request->file('image');
+            $extension = $uploadedFile->clientExtension();
+            $name = uniqid();
+            $film->image =  $uploadedFile->storePubliclyAs(
+                '/',
+                $name . '.' . $extension,
+                'uploads'
+            );
+        }
         $film->save();
 
         //return redirect('/films/update/' . $film->id);
@@ -116,8 +136,14 @@ class FilmController extends Controller implements HasMiddleware
     public function delete(Film $film): RedirectResponse
     {
     
+        if ($film->image) {
+            unlink(getcwd() . '/images/' . $film->image);
+        }
+
         $film->delete();
         return redirect('/films');
+
+
     }
 
 }

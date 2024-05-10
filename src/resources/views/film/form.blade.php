@@ -10,8 +10,10 @@
 
     <form
         method="post"
-        action="{{ $film->exists ? '/films/patch/' . $film->id : '/films/put' }}">
+        action="{{ $film->exists ? '/films/patch/' . $film->id : '/films/put' }}"
+        enctype="multipart/form-data">
         @csrf
+
 
         <div class="mb-3">
             <label for="film-name" class="form-label">Name</label>
@@ -41,7 +43,8 @@
                     @foreach($producers as $producer)
                         <option
                             value="{{ $producer->id }}"
-                            @if ($producer->id == old('producer_id', $film->producer->id ?? false)) selected @endif
+                            @if ($producer->id == old('producer_id', $film->producer->id ?? false)) selected 
+                            @endif
                         >{{ $producer->name }}</option>
                     @endforeach
             </select>
@@ -52,7 +55,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="film-description" class="form-label">Apraksts</label>
+            <label for="film-description" class="form-label">Description</label>
 
             <textarea
                 id="film-description"
@@ -82,6 +85,7 @@
         </div>
 
         <div class="mb-3">
+            <!-- //TODO change to rating -->
             <label for="film-price" class="form-label">Price</label>
 
             <input
@@ -97,7 +101,28 @@
             @enderror
         </div>
 
-        // image
+        <div class="mb-3">
+            <label for="film-image" class="form-label">Cover</label>
+
+            @if ($film->image)
+                <img
+                    src="{{ asset('images/' . $film->image) }}"
+                    class="img-fluid img-thumbnail d-block mb-2"
+                    alt="{{ $film->name }}"
+                >
+            @endif
+
+            <input
+                type="file" accept="image/png, image/jpeg, image/webp"
+                id="film-image"
+                name="image"
+                class="form-control @error('image') is-invalid @enderror"
+            >
+
+            @error('image')
+                <p class="invalid-feedback">{{ $errors->first('image') }}</p>
+            @enderror
+        </div>
 
         <div class="mb-3">
             <div class="form-check">
