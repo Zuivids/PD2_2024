@@ -33,5 +33,91 @@ class FilmController extends Controller implements HasMiddleware
             ]
         );
     }
+    
+   
+    public function create():View
+    {
+        $producers = Producer::orderBy('name', 'asc')->get();
+        return view(
+            'film.form',
+            [
+                'title' => 'Add Film',
+                'film' => new Film(),
+                'producers' => $producers,
+            ]
+            );
+    }
+    
+    public function put(Request $request): RedirectResponse
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|min:3|max:256',
+            'producer_id' => 'required',
+            'description' => 'nullable',
+            'price' => 'nullable|numeric',
+            'year' => 'numeric',
+            'image' => 'nullable|image',
+            'display' => 'nullable',
+        ]);
+
+        $film = new Film();
+        $film->name = $validatedData['name'];
+        $film->producer_id = $validatedData['producer_id'];
+        $film->description = $validatedData['description'];
+        $film->price = $validatedData['price'];
+        $film->year = $validatedData['year'];
+        $film->display = (bool) ($validatedData['display'] ?? false);
+        $film->save();
+
+        return redirect('/films');
+    }
+
+    // display Film edit form
+    public function update(Film $film): View
+    {
+        $producers = Producer::orderBy('name', 'asc')->get();
+
+        return view(
+            'film.form',
+            [
+                'title' => 'Rediģēt grāmatu',
+                'film' => $film,
+                'producers' => $producers,
+            ]
+        );
+    }
+
+    // update Film data
+    public function patch(Film $film, Request $request): RedirectResponse
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|min:3|max:256',
+            'producer_id' => 'required',
+            'description' => 'nullable',
+            'price' => 'nullable|numeric',
+            'year' => 'numeric',
+            'image' => 'nullable|image',
+            'display' => 'nullable',
+        ]);
+
+        $film->name = $validatedData['name'];
+        $film->producer_id = $validatedData['producer_id'];
+        $film->description = $validatedData['description'];
+        $film->price = $validatedData['price'];
+        $film->year = $validatedData['year'];
+        $film->display = (bool) ($validatedData['display'] ?? false);
+        $film->save();
+
+        //return redirect('/films/update/' . $film->id);
+        return redirect('/films');
+    }
+
+    // delete Film
+    public function delete(Film $film): RedirectResponse
+    {
+    
+        $film->delete();
+        return redirect('/films');
+    }
 
 }

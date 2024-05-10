@@ -18,7 +18,7 @@ class ProducerController extends Controller implements HasMiddleware
             'auth',
         ];
     }
-    
+
     //display all Producers
     public function list():View
     {
@@ -41,7 +41,7 @@ class ProducerController extends Controller implements HasMiddleware
         return view(
             'producer.form',
             [
-                'title' => 'Pievienot Producentu',
+                'title' => 'Add Producer',
                 'producer' => new Producer,
             ]
             );
@@ -66,7 +66,7 @@ class ProducerController extends Controller implements HasMiddleware
         return view(
             'producer.form',
             [
-                'title' => 'Rediģēt Producentu',
+                'title' => 'Edit Producer',
                 'producer' =>  $producer,
             ]
             );
