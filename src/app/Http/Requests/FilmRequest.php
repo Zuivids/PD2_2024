@@ -31,4 +31,6 @@ class FilmRequest extends FormRequest
             'display' => 'nullable',
         ];
     }
+
+    
 }

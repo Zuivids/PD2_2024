@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\FilmRequest;
+use Illuminate\Http\Request\FilmRequest;
 use App\Models\Producer;
 use App\Models\Film;
 use Illuminate\View\View;
+use Illuminate\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
