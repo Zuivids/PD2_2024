@@ -9,7 +9,7 @@
 
     @if ($errors->any())
         <div class="alert alert-danger">
-            Neizdevās pieslēgties. Lūdzu, mēģiniet vēlreiz!
+            Could not connect. Please try again!
         </div>
     @endif
 
@@ -17,7 +17,7 @@
         @csrf
 
         <div class="mb-3">
-            <label for="login-name" class="form-label">Lietotāja vārds</label>
+            <label for="login-name" class="form-label">Username</label>
             <input
                 type="text"
                 id="login-name"
@@ -29,7 +29,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="login-password" class="form-label">Parole</label>
+            <label for="login-password" class="form-label">Password</label>
             <input
                 type="password"
                 id="login-password"
@@ -39,7 +39,7 @@
         </div>
 
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Pieslēgties</button>
+            <button type="submit" class="btn btn-primary">Log in</button>
         </div>
 
     </form>

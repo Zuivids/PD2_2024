@@ -10,7 +10,7 @@
             <thead class="thead-light">
                 <tr>
                     <th>ID</td>
-                    <th>Vārds</td>
+                    <th>Name</td>
                     <th>&nbsp;</td>
                 </tr>
             </thead>
@@ -21,11 +21,11 @@
                 <td>{{ $producer->id }}</td>
                 <td>{{ $producer->name }}</td>
                 <td>
-                    <a href="/producers/update/{{ $producer->id }}" class="btn btn-outline-primary btn-sm">Labot</a>
+                    <a href="/producers/update/{{ $producer->id }}" class="btn btn-outline-primary btn-sm">Edit</a>
                     
                     <form action="/producers/delete/{{ $producer->id }}" method="post" class="deletion-form d-inline">
                         @csrf
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Dzēst</button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                     </form>
                 </td>
 
@@ -37,10 +37,10 @@
  
     @else
  
-        <p>Nav atrasts neviens ieraksts</p>
+        <p>No record was found</p>
  
     @endif
  
-    <a href="/producers/create" class="btn btn-primary">Izveidot jaunu</a>
+    <a href="/producers/create" class="btn btn-primary">Create new record</a>
 
 @endsection

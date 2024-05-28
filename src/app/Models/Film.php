@@ -31,8 +31,9 @@ class Film extends Model
             'description' => $this->description,
             'producer' => $this->producer->name,
             //TODO
-            // 'genre' => ($this->genre ? $this->genre->name : ''),   
-            'price' => number_format($this->price, 2),
+            'genre' => ($this->genre ? $this->genre->name : ''),   
+            //'price' => number_format($this->price, 2),
+            'raiting' => number_format($this->raiting, 1),
             'year' => intval($this->year),
             'image' => asset('images/' . $this->image),
         ];

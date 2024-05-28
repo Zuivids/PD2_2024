@@ -25,7 +25,10 @@ class FilmController extends Controller implements HasMiddleware
         $film>fill($validatedData);
         $film->display = (bool) ($validatedData['display'] ?? false);
         if ($request->hasFile('image')) {
-            //TODO ja atjauno bildi, izdzesh veco
+            //Ja atjauno bildi, izdzesh veco
+            if ($film->image) {
+                unlink(getcwd() . '/images/' . $film->image);
+            }
             $uploadedFile = $request->file('image');
             $extension = $uploadedFile->clientExtension();
             $name = uniqid();
@@ -83,7 +86,7 @@ class FilmController extends Controller implements HasMiddleware
         return view(
             'film.form',
             [
-                'title' => 'Rediģēt grāmatu',
+                'title' => 'Edit film',
                 'film' => $film,
                 'producers' => $producers,
             ]

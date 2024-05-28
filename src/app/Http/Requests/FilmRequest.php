@@ -25,7 +25,10 @@ class FilmRequest extends FormRequest
             'name' => 'required|min:3|max:256',
             'producer_id' => 'required',
             'description' => 'nullable',
-            'price' => 'nullable|numeric',
+            //TODO Change price to raiting
+            // 'price' => 'nullable|numeric',
+            'raiting' => 'nullable|numeric',
+            'genre' => 'nullable',
             'year' => 'numeric',
             'image' => 'nullable|image',
             'display' => 'nullable',

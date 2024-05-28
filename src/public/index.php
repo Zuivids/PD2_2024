@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Request\FilmRequest;
 
 define('LARAVEL_START', microtime(true));
 
