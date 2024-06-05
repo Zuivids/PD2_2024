@@ -5,6 +5,7 @@ use App\Http\Controllers\ProducerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\DataController;
 
 Route::get('/', [HomeController::class,'index']);
 
@@ -26,3 +27,8 @@ Route::post('/films/put', [FilmController::class,'put']);
 Route::get('/films/update/{film}', [FilmController::class,'update']);
 Route::post('/films/patch/{film}', [FilmController::class,'patch']);
 Route::post('/films/delete/{film}', [FilmController::class,'delete']);
+
+// Data/API
+Route::get('/data/get-top-film', [DataController::class, 'getTopFilms']);
+Route::get('/data/get-film/{film}', [DataController::class, 'getFilm']);
+Route::get('/data/get-related-films/{film}', [DataController::class, 'getRelatedFilms']);

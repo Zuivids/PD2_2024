@@ -11,7 +11,7 @@ class HomeController extends Controller
     public function index(): View
     {
         return view(
-            'home.index',
+            'public',
             [
                 'title' => 'Sākumlapa',
             ]

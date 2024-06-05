@@ -13,7 +13,9 @@
                     <th>Name</th>
                     <th>Producer</th>
                     <th>Year</th>
-                    <th>Price</th>
+                    <th>IMDb rating</th>
+                    <th>Genre</th>
+                    <!-- <th>Price</th> -->
                     <th>Display</th>
                     <th>&nbsp;</th>
                 </tr>
@@ -32,7 +34,7 @@
                         <a
                             href="/films/update/{{ $film->id }}"
                             class="btn btn-outline-primary btn-sm"
-                        >Labot</a> /
+                        >Edit</a> /
                         <form
                             method="post"
                             action="/films/delete/{{ $film->id }}"
@@ -42,7 +44,7 @@
                             <button
                                 type="submit"
                                 class="btn btn-outline-danger btn-sm"
-                            >Dzēst</button>
+                            >Delete</button>
                         </form>
                     </td>
                 </tr>

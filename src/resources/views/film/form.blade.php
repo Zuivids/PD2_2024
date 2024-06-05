@@ -84,9 +84,9 @@
             @enderror
         </div>
 
-        <div class="mb-3">
-            <!-- //TODO change to rating -->
-            <label for="film-price" class="form-label">Price</label>
+        <!-- <div class="mb-3">
+           
+            <label for="film-price" class="form-label"></label>
 
             <input
                 type="number" min="0.00" step="0.01" lang="en"
@@ -99,8 +99,25 @@
             @error('price')
                 <p class="invalid-feedback">{{ $errors->first('price') }}</p>
             @enderror
-        </div>
+        </div> -->
+        <!-- //TODO change to rating -->
+        <div class="mb-3">
+           
+           <label for="film-rating" class="form-label">IMDb rating</label>
 
+           <input
+               type="number" min="0.00" step="0.1" lang="en"
+               id="film-rating"
+               name="rating"
+               value="{{ old('rating', $film->rating) }}"
+               class="form-control @error('rating') is-invalid @enderror"
+           >
+
+           @error('rating')
+               <p class="invalid-feedback">{{ $errors->first('rating') }}</p>
+           @enderror
+       </div>
+        
         <div class="mb-3">
             <label for="film-image" class="form-label">Cover</label>
 
@@ -135,7 +152,7 @@
                     @if (old('display', $film->display)) checked @endif
                 >
                 <label class="form-check-label" for="film-display">
-                    Publicēt ierakstu
+                    Publish entry
                 </label>
 
                 @error('display')
@@ -145,7 +162,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">
-            {{ $film->exists ? 'Atjaunot ierakstu' : 'Pievienot ierakstu' }}
+            {{ $film->exists ? 'Restore entry' : 'Add entry' }}
         </button>
     </form>
 
