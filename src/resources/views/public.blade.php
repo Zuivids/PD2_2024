@@ -35,7 +35,7 @@
 
         
         @viteReactRefresh
-        @vite('resources/js/app.jsx')
+        @vite('resources/js/index.jsx')
     </body>
 
 </html>
