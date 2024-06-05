@@ -1,0 +1,142 @@
+warning: in the working copy of 'src/public/js/admin.js', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'src/resources/views/producer/form.blade.php', CRLF will be replaced by LF the next time Git touches it
+[1mdiff --git a/PD2-sagatave b/PD2-sagatave[m
+[1m--- a/PD2-sagatave[m
+[1m+++ b/PD2-sagatave[m
+[36m@@ -1 +1 @@[m
+[31m-Subproject commit 7ca83a73312ac0c6a67d06b74101cab9da828614[m
+[32m+[m[32mSubproject commit 7ca83a73312ac0c6a67d06b74101cab9da828614-dirty[m
+[1mdiff --git a/mariadb/ddl_recovery.log b/mariadb/ddl_recovery.log[m
+[1mindex 5e30b6d..fc3fd79 100644[m
+Binary files a/mariadb/ddl_recovery.log and b/mariadb/ddl_recovery.log differ
+[1mdiff --git a/mariadb/ib_logfile0 b/mariadb/ib_logfile0[m
+[1mindex 308e66c..9b77e83 100644[m
+Binary files a/mariadb/ib_logfile0 and b/mariadb/ib_logfile0 differ
+[1mdiff --git a/src/app/Http/Controllers/FilmController.php b/src/app/Http/Controllers/FilmController.php[m
+[1mindex 242631b..4ec206b 100644[m
+[1m--- a/src/app/Http/Controllers/FilmController.php[m
+[1m+++ b/src/app/Http/Controllers/FilmController.php[m
+[36m@@ -25,7 +25,10 @@[m [mprivate function saveFilmData(Film $film, FilmRequest $request){[m
+         $film>fill($validatedData);[m
+         $film->display = (bool) ($validatedData['display'] ?? false);[m
+         if ($request->hasFile('image')) {[m
+[31m-            //TODO ja atjauno bildi, izdzesh veco[m
+[32m+[m[32m            //Ja atjauno bildi, izdzesh veco[m
+[32m+[m[32m            if ($film->image) {[m
+[32m+[m[32m                unlink(getcwd() . '/images/' . $film->image);[m
+[32m+[m[32m            }[m
+             $uploadedFile = $request->file('image');[m
+             $extension = $uploadedFile->clientExtension();[m
+             $name = uniqid();[m
+[1mdiff --git a/src/app/Http/Requests/FilmRequest.php b/src/app/Http/Requests/FilmRequest.php[m
+[1mindex cef59d6..5b11b68 100644[m
+[1m--- a/src/app/Http/Requests/FilmRequest.php[m
+[1m+++ b/src/app/Http/Requests/FilmRequest.php[m
+[36m@@ -25,7 +25,10 @@[m [mpublic function rules(): array[m
+             'name' => 'required|min:3|max:256',[m
+             'producer_id' => 'required',[m
+             'description' => 'nullable',[m
+[31m-            'price' => 'nullable|numeric',[m
+[32m+[m[32m            //TODO Change price to raiting[m
+[32m+[m[32m            // 'price' => 'nullable|numeric',[m
+[32m+[m[32m            'raiting' => 'nullable|numeric',[m
+[32m+[m[32m            'genre' => 'nullable',[m
+             'year' => 'numeric',[m
+             'image' => 'nullable|image',[m
+             'display' => 'nullable',[m
+[1mdiff --git a/src/database/migrations/2024_05_10_123918_create_films_table.php b/src/database/migrations/2024_05_10_123918_create_films_table.php[m
+[1mindex 6b73ddc..cf5bdf3 100644[m
+[1m--- a/src/database/migrations/2024_05_10_123918_create_films_table.php[m
+[1m+++ b/src/database/migrations/2024_05_10_123918_create_films_table.php[m
+[36m@@ -16,6 +16,7 @@[m [mpublic function up(): void[m
+             $table->foreignId('producer_id');[m
+             $table->string('name', 256);[m
+             $table->text('description')->nullable();[m
+[32m+[m[32m            //TODO change price to raiting[m
+             $table->decimal('price', 8, 2)->nullable();[m
+             $table->integer('year');[m
+             $table->string('image', 256)->nullable();[m
+[1mdiff --git a/src/public/js/admin.js b/src/public/js/admin.js[m
+[1mindex 3cd6614..282e57a 100644[m
+[1m--- a/src/public/js/admin.js[m
+[1m+++ b/src/public/js/admin.js[m
+[36m@@ -8,7 +8,7 @@[m [mfunction setupDeleteForms() {[m
+         form.addEventListener('submit', function (event) {[m
+             event.preventDefault();[m
+ [m
+[31m-            if (window.confirm('Vai tiešām vēlaties dzēst šo ierakstu?')) {[m
+[32m+[m[32m            if (window.confirm('Do you really want to delete this?')) {[m
+                 form.submit();[m
+             } else {[m
+                 return false;[m
+[1mdiff --git a/src/resources/views/producer/form.blade.php b/src/resources/views/producer/form.blade.php[m
+[1mindex 33f8329..6245963 100644[m
+[1m--- a/src/resources/views/producer/form.blade.php[m
+[1m+++ b/src/resources/views/producer/form.blade.php[m
+[36m@@ -5,14 +5,14 @@[m
+     <h1>{{ $title }}</h1>[m
+  [m
+     @if ($errors->any())[m
+[31m-        <div class="alert alert-danger">Lūdzu, novērsiet radušās kļūdas!</div>[m
+[32m+[m[32m        <div class="alert alert-danger">Please fix errors!</div>[m
+     @endif[m
+  [m
+     <form method="post" action="{{ $producer->exists ? '/producers/patch/' . $producer->id : '/producers/put' }}">[m
+         @csrf[m
+  [m
+         <div class="mb-3">[m
+[31m-            <label for="producer-name" class="form-label">Producenta vārds</label>[m
+[32m+[m[32m            <label for="producer-name" class="form-label">Producer name</label>[m
+  [m
+             <input [m
+                 type="text" [m
+[36m@@ -28,7 +28,7 @@[m [mclass="form-control @error('name') is-invalid @enderror"[m
+  [m
+         </div>[m
+  [m
+[31m-        <button type="submit" class="btn btn-primary">{{ $producer->exists ? 'Rediģēt' : 'Pievienot'}}</button>[m
+[32m+[m[32m        <button type="submit" class="btn btn-primary">{{ $producer->exists ? 'Edit' : 'Add'}}</button>[m
+  [m
+     </form>[m
+  [m
+[1mdiff --git a/src/resources/views/producer/list.blade.php b/src/resources/views/producer/list.blade.php[m
+[1mindex 824bd40..47f656d 100644[m
+[1m--- a/src/resources/views/producer/list.blade.php[m
+[1m+++ b/src/resources/views/producer/list.blade.php[m
+[36m@@ -10,7 +10,7 @@[m
+             <thead class="thead-light">[m
+                 <tr>[m
+                     <th>ID</td>[m
+[31m-                    <th>Vārds</td>[m
+[32m+[m[32m                    <th>Name</td>[m
+                     <th>&nbsp;</td>[m
+                 </tr>[m
+             </thead>[m
+[36m@@ -21,11 +21,11 @@[m
+                 <td>{{ $producer->id }}</td>[m
+                 <td>{{ $producer->name }}</td>[m
+                 <td>[m
+[31m-                    <a href="/producers/update/{{ $producer->id }}" class="btn btn-outline-primary btn-sm">Labot</a>[m
+[32m+[m[32m                    <a href="/producers/update/{{ $producer->id }}" class="btn btn-outline-primary btn-sm">Edit</a>[m
+                     [m
+                     <form action="/producers/delete/{{ $producer->id }}" method="post" class="deletion-form d-inline">[m
+                         @csrf[m
+[31m-                        <button type="submit" class="btn btn-outline-danger btn-sm">Dzēst</button>[m
+[32m+[m[32m                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>[m
+                     </form>[m
+                 </td>[m
+ [m
+[36m@@ -37,10 +37,10 @@[m
+  [m
+     @else[m
+  [m
+[31m-        <p>Nav atrasts neviens ieraksts</p>[m
+[32m+[m[32m        <p>No record was found</p>[m
+  [m
+     @endif[m
+  [m
+[31m-    <a href="/producers/create" class="btn btn-primary">Izveidot jaunu</a>[m
+[32m+[m[32m    <a href="/producers/create" class="btn btn-primary">Create new record</a>[m
+ [m
+ @endsection[m
+\ No newline at end of file[m
