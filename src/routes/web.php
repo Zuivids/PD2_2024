@@ -29,6 +29,6 @@ Route::post('/films/patch/{film}', [FilmController::class,'patch']);
 Route::post('/films/delete/{film}', [FilmController::class,'delete']);
 
 // Data/API
-Route::get('/data/get-top-film', [DataController::class, 'getTopFilms']);
+Route::get('/data/get-top-films', [DataController::class, 'getTopFilms']);
 Route::get('/data/get-film/{film}', [DataController::class, 'getFilm']);
 Route::get('/data/get-related-films/{film}', [DataController::class, 'getRelatedFilms']);

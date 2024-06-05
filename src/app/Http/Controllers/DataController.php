@@ -12,7 +12,7 @@ class DataController extends Controller
     // Return 3 published Films in random order
     public function getTopFilms(): JsonResponse
     {
-        $film = Film::where('display', true)
+        $films = Film::where('display', true)
             ->inRandomOrder()
             ->take(3)
             ->get();

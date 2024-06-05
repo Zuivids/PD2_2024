@@ -18,8 +18,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             //TODO change price to raiting
             // $table->decimal('price', 8, 2)->nullable();
-            $table->integer('rating');
-            $table->text('genre')->nullable();
+            // $table->integer('rating');
+            // $table->text('genre')->nullable();
             $table->integer('year');
             $table->string('image', 256)->nullable();
             $table->boolean('display');

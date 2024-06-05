@@ -54,7 +54,7 @@ function Homepage({onSelect}){
     return(
         <>
             {
-            TopFilms.map((film, idx) => (<TopFilm film = {{...film,idx: idx}} key={film.id} onSelect={onSelect} />))
+                TopFilms.map((film, idx) => (<TopFilm film = {{...film,idx: idx}} key={film.id} onSelect={onSelect} />))
             }
         </>
     );
@@ -69,7 +69,7 @@ function TopFilm({film, onSelect}) {
             <div classNameName="col-md-6 mt-2 px-5 text-start order-2">
                 <p className="display-4">{film.name}</p>
                 <p className="lead">{(film.description.split(' ').slice(0, 32).join(' ')) + '...' }</p>
-                <button className="btn btn-success" onClick={() => onSelect(films.)}>View</button>
+                <button className="btn btn-success" onClick={() => onSelect(films.id)}>View</button>
             </div>
             <div className="col-md-6 text-center order-1">
                 <img className="img-fluid img-thumbnail rounded-lg w-50" alt={ film.name} src={ film.image} />
@@ -81,7 +81,7 @@ function TopFilm({film, onSelect}) {
 function FilmPage(selectedFilm){
     return(
         <>
-            <p> Film is chosen</p>
+            <p> Film {selectedFilm} is chosen</p>
         </>
     );
 }
