@@ -12,6 +12,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Producer</th>
+                    <th>Genre</th>
                     <th>Year</th>
                     <th>IMDb rating</th>
                     <th>Genre</th>
@@ -27,7 +28,9 @@
                     <td>{{ $film->id }}</td>
                     <td>{{ $film->name }}</td>
                     <td>{{ $film->producer->name }}</td>
+                    <td>{{ $film->genre->name }}</td>
                     <td>{{ $film->year }}</td>
+                    <td>{{ $film->rating }}</td>
                     <td>&euro; {{ number_format($film->price, 2, '.') }}</td>
                     <td>{!! $film->display ? '&#x2714;' : '&#x274C;' !!}</td>
                     <td>

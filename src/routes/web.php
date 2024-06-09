@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\GenreController;
 
 Route::get('/', [HomeController::class,'index']);
 
@@ -32,3 +33,11 @@ Route::post('/films/delete/{film}', [FilmController::class,'delete']);
 Route::get('/data/get-top-films', [DataController::class, 'getTopFilms']);
 Route::get('/data/get-film/{film}', [DataController::class, 'getFilm']);
 Route::get('/data/get-related-films/{film}', [DataController::class, 'getRelatedFilms']);
+
+// Genres
+Route::get('/genres', [GenreController::class, 'list']);
+Route::get('/genres/create', [GenreController::class, 'create']);
+Route::post('/genres/put', [GenreController::class, 'put']);
+Route::get('/genres/update/{genre}', [GenreController::class, 'update']);
+Route::post('/genres/patch/{genre}', [GenreController::class, 'patch']);
+Route::post('/genres/delete/{genre}', [GenreController::class, 'delete']);

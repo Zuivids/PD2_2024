@@ -13,7 +13,7 @@ class HomeController extends Controller
         return view(
             'public',
             [
-                'title' => 'Sākumlapa',
+                'title' => 'Home page',
             ]
 
         );

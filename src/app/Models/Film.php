@@ -13,14 +13,22 @@ class Film extends Model
     protected $fillable = [
         'name',
         'producer_id',
+        'genre_id',
         'description',
+        'rating',
         'price',
         'year',
+
     ];
 
     public function producer(): BelongsTo
     {
         return $this->belongsTo(Producer::class);
+    }
+
+    public function genre(): BelongsTo
+    {
+        return $this->belongsTo(Genre::class);
     }
 
     public function jsonSerialize(): mixed
@@ -31,9 +39,9 @@ class Film extends Model
             'description' => $this->description,
             'producer' => $this->producer->name,
             //TODO
-            // 'genre' => ($this->genre ? $this->genre->name : ''),   
+            'genre' => ($this->genre ? $this->genre->name : ''),   
             //'price' => number_format($this->price, 2),
-            // 'raiting' => number_format($this->raiting, 1),
+            'rating' => number_format($this->rating, 1),
             'year' => intval($this->year),
             'image' => asset('images/' . $this->image),
         ];

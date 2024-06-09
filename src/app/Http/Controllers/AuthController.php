@@ -31,7 +31,6 @@ class AuthController extends Controller
     
             $request->session()->regenerate();
     
-            // Šo vēlāk nomainīsim uz /books
             return redirect('/producers');
         }
     

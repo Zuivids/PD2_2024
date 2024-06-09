@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request\FilmRequest;
+use App\Http\Requests\FilmRequest;
 use App\Models\Producer;
 use App\Models\Film;
+use App\Models\Genre;
 use Illuminate\View\View;
 use Illuminate\Request;
 use Illuminate\Http\RedirectResponse;
@@ -60,12 +61,14 @@ class FilmController extends Controller implements HasMiddleware
     public function create():View
     {
         $producers = Producer::orderBy('name', 'asc')->get();
+        $genres = Genre::orderBy('name', 'asc')->get();
         return view(
             'film.form',
             [
                 'title' => 'Add Film',
                 'film' => new Film(),
                 'producers' => $producers,
+                'genres' => $genres,
             ]
             );
     }
@@ -82,6 +85,7 @@ class FilmController extends Controller implements HasMiddleware
     public function update(Film $film): View
     {
         $producers = Producer::orderBy('name', 'asc')->get();
+        $genres = Genre::orderBy('name', 'asc')->get();
 
         return view(
             'film.form',
@@ -89,6 +93,7 @@ class FilmController extends Controller implements HasMiddleware
                 'title' => 'Edit film',
                 'film' => $film,
                 'producers' => $producers,
+                'genres' => $genres,
             ]
         );
     }

@@ -69,6 +69,29 @@
         </div>
 
         <div class="mb-3">
+            <label for="film-genre" class="form-label">Genre</label>
+
+            <select
+                id="film-genre"
+                name="genre_id"
+                class="form-select @error('genre_id') is-invalid @enderror"
+            >
+                <option value="">Add genre!</option>
+                    @foreach($genres as $genre)
+                        <option
+                            value="{{ $genre->id }}"
+                            @if ($genre->id == old('genre_id', $film->genre->id ?? false)) selected 
+                            @endif
+                        >{{ $genre->name }}</option>
+                    @endforeach
+            </select>
+
+            @error('genre_id')
+                <p class="invalid-feedback">{{ $errors->first('genre_id') }}</p>
+            @enderror
+        </div>
+
+        <div class="mb-3">
             <label for="film-year" class="form-label">Release year</label>
 
             <input
