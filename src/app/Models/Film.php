@@ -16,7 +16,7 @@ class Film extends Model
         'genre_id',
         'description',
         'rating',
-        'price',
+        // 'price',
         'year',
 
     ];
@@ -41,7 +41,7 @@ class Film extends Model
             //TODO
             'genre' => ($this->genre ? $this->genre->name : ''),   
             //'price' => number_format($this->price, 2),
-            'rating' => number_format($this->rating, 1),
+            'rating' => number_format($this->rating, 2),
             'year' => intval($this->year),
             'image' => asset('images/' . $this->image),
         ];

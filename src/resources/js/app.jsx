@@ -89,8 +89,9 @@ function TopFilm({film, onSelect}) {
 function FilmPage(selectedFilm){
     return(
         <>
-            <p> Film {selectedFilm} is chosen</p>
-        </>
+        <FilmDetails selectedFilm={selectedFilm} onSelect={onSelect} />
+        <RelatedContainer selectedFilm={selectedFilm} onSelect={onSelect} />
+    </>
     );
 }
 

@@ -43,9 +43,9 @@ class FilmController extends Controller implements HasMiddleware
 
         if ($request->hasFile('image')) {
             //Ja atjauno bildi, izdzesh veco
-            if ($film->image) {
-                unlink(getcwd() . '/images/' . $film->image);
-            }
+            // if ($film->image) {
+            //     unlink(getcwd() . '/images/' . $film->image);
+            // }
             $uploadedFile = $request->file('image');
             $extension = $uploadedFile->clientExtension();
             $name = uniqid();

@@ -15,7 +15,6 @@
                     <th>Genre</th>
                     <th>Year</th>
                     <th>IMDb rating</th>
-                    <th>Genre</th>
                     <!-- <th>Price</th> -->
                     <th>Display</th>
                     <th>&nbsp;</th>
@@ -31,7 +30,6 @@
                     <td>{{ $film->genre->name }}</td>
                     <td>{{ $film->year }}</td>
                     <td>{{ $film->rating }}</td>
-                    <td>&euro; {{ number_format($film->price, 2, '.') }}</td>
                     <td>{!! $film->display ? '&#x2714;' : '&#x274C;' !!}</td>
                     <td>
                         <a
