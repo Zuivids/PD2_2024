@@ -63,7 +63,7 @@
             <div class="container">
                 <div class="row py-5">
                     <div class="col">
-                        M.Zaimis, 2024
+                        M.Žaimis, 2024
                     </div>
                 </div>
             </div>
