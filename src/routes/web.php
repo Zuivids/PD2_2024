@@ -41,3 +41,8 @@ Route::post('/genres/put', [GenreController::class, 'put']);
 Route::get('/genres/update/{genre}', [GenreController::class, 'update']);
 Route::post('/genres/patch/{genre}', [GenreController::class, 'patch']);
 Route::post('/genres/delete/{genre}', [GenreController::class, 'delete']);
+
+// Data/API
+Route::get('/data/get-top-films', [DataController::class, 'getTopFilms']);
+Route::get('/data/get-film/{film}', [DataController::class, 'getFilm']);
+Route::get('/data/get-related-films/{films}', [DataController::class,'getRelatedFilms']);

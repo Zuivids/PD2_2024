@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use App\Models\Film;
 use Illuminate\Http\JsonResponse;
 
@@ -16,6 +16,12 @@ class DataController extends Controller
             ->inRandomOrder()
             ->take(3)
             ->get();
+
+
+            //Kludu parbaude
+            // sleep(3)
+            // $e =5/ 0;
+
         
         return response()->json($films);
     }
@@ -34,7 +40,7 @@ class DataController extends Controller
     public function getRelatedFilms(Film $film): JsonResponse
     {
         $films = Film::where('display', true)
-            ->where('id', '<>', $film->id) //TODO pievient filmas ar to pashu rezisoru vai zandru
+            ->where('id', '<>', $film->id) //TODO pievient filmas ar to pashu rezisoru vai zanru
             ->inRandomOrder()
             ->take(3)
             ->get();

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Producer;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use App\Models\Producer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 

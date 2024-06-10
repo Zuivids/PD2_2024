@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\FilmRequest;
 use App\Models\Producer;
 use App\Models\Film;
 use App\Models\Genre;
+use App\Http\Requests\FilmRequest;
 use Illuminate\View\View;
-use Illuminate\Request;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
@@ -19,12 +19,28 @@ class FilmController extends Controller implements HasMiddleware
             'auth',
         ];
     }
-    private function saveFilmData(Film $film, FilmRequest $request){
 
-        $validatedData = $request->validate();
+    // display all Films
+    public function list(): View
+    {
+        $items = Film::orderBy('name', 'asc')->get();
 
-        $film>fill($validatedData);
+        return view(
+            'film.list',
+            [
+                'title' => 'Films',
+                'items' => $items
+            ]
+        );
+    }
+    
+
+    private function saveFilmData(Film $film, FilmRequest $request): void {
+
+        $validatedData = $request->validated();
+        $film->fill($validatedData);
         $film->display = (bool) ($validatedData['display'] ?? false);
+
         if ($request->hasFile('image')) {
             //Ja atjauno bildi, izdzesh veco
             if ($film->image) {
@@ -41,23 +57,10 @@ class FilmController extends Controller implements HasMiddleware
         }
         $film->save();
 
-        return redirect('/films');
+        //return redirect('/films');
 
     }
-    // display all Films
-    public function list(): View
-    {
-        $items = Film::orderBy('name', 'asc')->get();
 
-        return view(
-            'film.list',
-            [
-                'title' => 'Films',
-                'items' => $items
-            ]
-        );
-    }
-    
     public function create():View
     {
         $producers = Producer::orderBy('name', 'asc')->get();

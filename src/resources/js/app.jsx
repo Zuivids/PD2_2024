@@ -24,13 +24,17 @@ export default function App(){
 function Homepage({onSelect}){
 
     const [TopFilms, setTopFilms] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(function() {
 
         async function getTopFilms(){
 
             try{
-                
+                setIsLoading(true);
+                setError("");
+
                 const result = await fetch('http://localhost/data/get-top-films');
 
                 if(!result.ok){
@@ -40,9 +44,11 @@ function Homepage({onSelect}){
                 const data = await result.json();
 
                 setTopFilms(data);
-
             }catch(error){
                 console.log(error);
+                setError(error.message);
+            }finally{
+                setIsLoading(false);
             }
 
         }
@@ -53,9 +59,11 @@ function Homepage({onSelect}){
 
     return(
         <>
-            {
-                TopFilms.map((film, idx) => (<TopFilm film = {{...film,idx: idx}} key={film.id} onSelect={onSelect} />))
-            }
+            {isLoading && <Loading />}
+            {error && <ErrorMsg message={error} />}
+            {!isLoading && !error && (
+                topFilms.map((film, idx) => (<TopFilm film={{ ...film, idx: idx }} key={film.id} onSelect={onSelect} />))
+            )}
         </>
     );
 }
@@ -83,5 +91,24 @@ function FilmPage(selectedFilm){
         <>
             <p> Film {selectedFilm} is chosen</p>
         </>
+    );
+}
+
+function Loading(){
+    return(
+        <div className="row mb-5 mt-5">
+            <div className="text-center">
+                <img src=".loading_gif.gif" alt="Please wait!" className="mx-auto d-block" />
+            </div>
+        </div>
+    );
+}
+
+function ErrorMsg({ message }) {
+    return (
+        <div className="alert alert-danger">
+            <p>{message}</p>
+            <p>Please refresh this page!</p>
+        </div>
     );
 }

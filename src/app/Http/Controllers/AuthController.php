@@ -35,7 +35,7 @@ class AuthController extends Controller
         }
     
         return back()->withErrors([
-            'name' => 'Pieslēgšanās neveiksmīga',
+            'name' => 'Log in unsuccesfull!',
         ]);
     }
 
